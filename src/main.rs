@@ -1,30 +1,30 @@
-use rand::Rng;
-use std::{cmp::Ordering, io};
-
 fn main() {
-    println!("Guess the number!");
+    let mut user1 = User {
+        active: true,
+        username: String::from("someusername123"),
+        email: String::from("someone@example.com"),
+        sign_in_count: 1,
+    };
+    println!("{}", user1.email);
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
-    loop {
-        println!("Please input your guess.");
-        let mut guess = String::new();
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("failed to read line");
-
-        let guess: u32 = match guess.trim().parse() {
-            Ok(num) => num,
-            Err(_) => continue,
-        };
-
-        println!("You guessed {guess}");
-        match guess.cmp(&secret_number) {
-            Ordering::Less => println!("too small"),
-            Ordering::Greater => println!("too big"),
-            Ordering::Equal => {
-                println!("You win!!");
-                break;
-            }
-        }
-    }
+    user1.email = String::from("anotheremail@example.com");
+    println!("{}", user1.email);
+    let user2 = User {
+        email: String::from("yetanother@example.com"),
+        ..user1
+    };
+    let black = Colour(0, 0, 0);
+    let origin = Point(0, 0, 0);
+    let subject = AlwaysEqual;
 }
+
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+struct Colour(i32, i32, i32);
+struct Point(i32, i32, i32);
+struct AlwaysEqual;
